@@ -1,0 +1,987 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_OCTOPUS_ENERGY",
+      "label": "Octopus Energy",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "yesoreyeram-infinity-datasource",
+      "pluginName": "Infinity"
+    },
+    {
+      "name": "VAR_MPAN",
+      "type": "constant",
+      "label": "MPAN",
+      "value": "XXX",
+      "description": ""
+    },
+    {
+      "name": "VAR_ELEC_SERIAL",
+      "type": "constant",
+      "label": "elec_serial",
+      "value": "XXX",
+      "description": ""
+    },
+    {
+      "name": "VAR_GAS_SERIAL",
+      "type": "constant",
+      "label": "gas_serial",
+      "value": "XXX",
+      "description": ""
+    },
+    {
+      "name": "VAR_MPRN",
+      "type": "constant",
+      "label": "MPRN",
+      "value": "XXX",
+      "description": ""
+    },
+    {
+      "name": "VAR_SOLAR_MPAN",
+      "type": "constant",
+      "label": "solar_MPAN",
+      "value": "XXX",
+      "description": ""
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.1.3"
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "yesoreyeram-infinity-datasource",
+      "name": "Infinity",
+      "version": "0.8.3"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "${DS_OCTOPUS_ENERGY}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Gas"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "m3"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 17,
+        "x": 0,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Solar Exported",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "json_options": {
+            "columnar": false
+          },
+          "key": "Q-7a44c7ed-3a1c-4135-8223-8c27a5639875-0",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/electricity-meter-points/$solar_MPAN/meters/$elec_serial/consumption/?page_size=12&group_by=month",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Grid Used",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "hide": false,
+          "refId": "B",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/electricity-meter-points/$MPAN/meters/$elec_serial/consumption/?page_size=12&group_by=month",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Gas",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "hide": false,
+          "refId": "C",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/gas-meter-points/$MPRN/meters/$gas_serial/consumption/?page_size=12&group_by=month",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Energy Monthly",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "${DS_OCTOPUS_ENERGY}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Gas"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "m3"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 17,
+        "x": 0,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Solar Exported",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "hide": false,
+          "json_options": {
+            "columnar": false
+          },
+          "key": "Q-7a44c7ed-3a1c-4135-8223-8c27a5639875-0",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/electricity-meter-points/$solar_MPAN/meters/$elec_serial/consumption/?page_size=26&group_by=week",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Grid Used",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "hide": false,
+          "refId": "B",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/electricity-meter-points/$MPAN/meters/$elec_serial/consumption/?page_size=26&group_by=week",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Gas",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "hide": false,
+          "refId": "C",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/gas-meter-points/$MPRN/meters/$gas_serial/consumption/?page_size=26&group_by=week",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Energy Weekly",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "${DS_OCTOPUS_ENERGY}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Gas"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "m3"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 17,
+        "x": 0,
+        "y": 16
+      },
+      "id": 5,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Solar Exported",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "hide": false,
+          "json_options": {
+            "columnar": false
+          },
+          "key": "Q-7a44c7ed-3a1c-4135-8223-8c27a5639875-0",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/electricity-meter-points/$solar_MPAN/meters/$elec_serial/consumption/?page_size=21&group_by=day",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Grid Used",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "hide": false,
+          "refId": "B",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/electricity-meter-points/$MPAN/meters/$elec_serial/consumption/?page_size=21&group_by=day",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Gas",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "hide": false,
+          "refId": "C",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/gas-meter-points/$MPRN/meters/$gas_serial/consumption/?page_size=21&group_by=day",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Energy Daily",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "${DS_OCTOPUS_ENERGY}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 53,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Gas"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "m3"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 17,
+        "x": 0,
+        "y": 24
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Solar Exported",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "hide": false,
+          "json_options": {
+            "columnar": false
+          },
+          "key": "Q-7a44c7ed-3a1c-4135-8223-8c27a5639875-0",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/electricity-meter-points/$solar_MPAN/meters/$elec_serial/consumption/?page_size=336",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Grid Used",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "hide": false,
+          "refId": "B",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/electricity-meter-points/$MPAN/meters/$elec_serial/consumption/?page_size=336",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "consumption",
+              "text": "Gas",
+              "type": "number"
+            },
+            {
+              "selector": "interval_end",
+              "text": "",
+              "type": "timestamp"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${DS_OCTOPUS_ENERGY}"
+          },
+          "filters": [],
+          "format": "timeseries",
+          "global_query_id": "",
+          "hide": false,
+          "refId": "C",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://api.octopus.energy/v1/gas-meter-points/$MPRN/meters/$gas_serial/consumption/?page_size=336",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Energy Hourly",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "hide": 2,
+        "name": "MPAN",
+        "query": "${VAR_MPAN}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_MPAN}",
+          "text": "${VAR_MPAN}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_MPAN}",
+            "text": "${VAR_MPAN}",
+            "selected": false
+          }
+        ]
+      },
+      {
+        "hide": 2,
+        "name": "elec_serial",
+        "query": "${VAR_ELEC_SERIAL}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_ELEC_SERIAL}",
+          "text": "${VAR_ELEC_SERIAL}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_ELEC_SERIAL}",
+            "text": "${VAR_ELEC_SERIAL}",
+            "selected": false
+          }
+        ]
+      },
+      {
+        "hide": 2,
+        "name": "gas_serial",
+        "query": "${VAR_GAS_SERIAL}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_GAS_SERIAL}",
+          "text": "${VAR_GAS_SERIAL}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_GAS_SERIAL}",
+            "text": "${VAR_GAS_SERIAL}",
+            "selected": false
+          }
+        ]
+      },
+      {
+        "hide": 2,
+        "name": "MPRN",
+        "query": "${VAR_MPRN}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_MPRN}",
+          "text": "${VAR_MPRN}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_MPRN}",
+            "text": "${VAR_MPRN}",
+            "selected": false
+          }
+        ]
+      },
+      {
+        "hide": 2,
+        "name": "solar_MPAN",
+        "query": "${VAR_SOLAR_MPAN}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_SOLAR_MPAN}",
+          "text": "${VAR_SOLAR_MPAN}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_SOLAR_MPAN}",
+            "text": "${VAR_SOLAR_MPAN}",
+            "selected": false
+          }
+        ]
+      }
+    ]
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": true
+  },
+  "timezone": "",
+  "title": "Octopus Energy",
+  "uid": "jZYB1jmVz",
+  "version": 32,
+  "weekStart": ""
+}
